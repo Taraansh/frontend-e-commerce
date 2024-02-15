@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,10 +8,6 @@ import { User } from "../../../services/User.service";
 import { useRouter } from "next/navigation";
 import { Context } from "../../../context";
 
-// interface IRegisterLoginProps {
-//   isRegisterForm?: boolean;
-// }
-
 const initialForm = {
   email: "",
   password: "",
@@ -19,9 +15,13 @@ const initialForm = {
   name: "",
 };
 
-const RegisterLogin = ({ isRegisterForm = false }) => {
+const RegisterLogin = ({ isRegisterForm = false, setTypeOfForm }) => {
   const [authForm, setAuthForm] = React.useState(initialForm);
-  const [otpForm, setOtpForm] = React.useState({ otp: "", email: "" });
+  const [otpForm, setOtpForm] = React.useState({
+    otp: "",
+    email: "",
+    name: "",
+  });
   const [otpTime, setOtpTime] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
@@ -33,7 +33,7 @@ const RegisterLogin = ({ isRegisterForm = false }) => {
 
   useEffect(() => {
     if (user && user.email) {
-      router.push("/my-account");
+      router.push("/");
     }
   }, [router, user]);
 
@@ -61,7 +61,7 @@ const RegisterLogin = ({ isRegisterForm = false }) => {
       const { success, message } = await User.createUsers(payload);
       if (success) {
         setAuthForm(initialForm);
-        setOtpForm({ otp: "", email: payload.email });
+        setOtpForm({ otp: "", email: payload.email, name: payload.name });
         setOtpTime(true);
         return toast.success(message);
       }
@@ -96,9 +96,9 @@ const RegisterLogin = ({ isRegisterForm = false }) => {
       const { success, result, message } = await User.loginUser(payload);
       if (success) {
         setAuthForm(initialForm);
-        localStorage.setItem('_e_commerce_user', JSON.stringify(result?.user))
+        localStorage.setItem("_e_commerce_user", JSON.stringify(result?.user));
         dispatch({ type: "LOGIN", payload: result?.user });
-        router.push("/my-account");
+        router.push("/");
         return toast.success(message);
       }
       throw new Error(message || "Something went wrong");
@@ -149,7 +149,8 @@ const RegisterLogin = ({ isRegisterForm = false }) => {
       const { success, message } = await User.verifyOtp(otp, email);
       if (success) {
         setOtpTime(false);
-        setOtpForm({ otp: "", email: "" });
+        setOtpForm({ otp: "", email: "", name: "" });
+        setTypeOfForm(false);
         return toast.success(message);
       }
       throw new Error(message || "Something went wrong");
@@ -162,10 +163,12 @@ const RegisterLogin = ({ isRegisterForm = false }) => {
   };
 
   return (
-    <>
-      <Card>
-        <Card.Header>
-          {isRegisterForm ? "Register Form" : "Login Form"}
+    <div
+      style={{ display: "flex", justifyContent: "center", marginTop: "3rem" }}
+    >
+      <Card style={{ width: "22rem" }}>
+        <Card.Header style={{ textAlign: "center" }}>
+          <h3>{isRegisterForm ? "Register" : "Login"}</h3>
         </Card.Header>
         <Card.Body>
           {isRegisterForm ? (
@@ -180,7 +183,7 @@ const RegisterLogin = ({ isRegisterForm = false }) => {
                   <Form.Control
                     type="text"
                     placeholder="Enter Full Name"
-                    value={authForm.name}
+                    value={authForm.name || otpForm.email}
                     autoComplete="name"
                     onChange={(e) => {
                       setAuthForm({ ...authForm, name: e.target.value });
@@ -231,7 +234,6 @@ const RegisterLogin = ({ isRegisterForm = false }) => {
                 )}
               </Form>
 
-              {/* {true && ( */}
               {otpTime && (
                 <Form>
                   <Form.Group>
@@ -314,7 +316,7 @@ const RegisterLogin = ({ isRegisterForm = false }) => {
           )}
         </Card.Body>
       </Card>
-    </>
+    </div>
   );
 };
 

@@ -3,9 +3,12 @@ import Head from "next/head";
 const Heading = () => {
   return (
     <Head>
-      <title>E-commerce</title>
-      <meta name="description" content="E-commerce - Get Instant License in a click"/>
-      <link rel="icon" href="/favicon.ico"/>
+      <title>ShopMonk</title>
+      <meta
+        name="description"
+        content="ShopMonk - Get Instant License in a click"
+      />
+      <link rel="icon" href="/favicon.ico" />
     </Head>
   );
 };

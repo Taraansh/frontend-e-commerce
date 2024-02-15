@@ -1,11 +1,5 @@
 import axios from "axios";
 
-// export interface responsePayload {
-//   success: boolean;
-//   result: any;
-//   message: string;
-// }
-
 const responseBody = (response) => response.data;
 
 const requests = {

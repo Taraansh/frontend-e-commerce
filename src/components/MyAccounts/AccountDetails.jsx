@@ -1,15 +1,9 @@
 "use client";
 
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { User } from "../../../services/User.service";
-import { responsePayload } from "../../../services/api";
-
-// interface IAccountDetailsIsProps {
-//   user: Record<string, any>;
-//   dispatch:any;
-// }
 
 const AccountDetails = ({ user, dispatch }) => {
   const [accountForm, setAccountForm] = useState({
@@ -38,8 +32,10 @@ const AccountDetails = ({ user, dispatch }) => {
 
       const payload = { name, oldPassword, newPassword };
 
-      const { success, message, result } =
-        await User.updateUser(user.id, payload);
+      const { success, message, result } = await User.updateUser(
+        user.id,
+        payload
+      );
       if (!success) {
         throw new Error(message);
       }

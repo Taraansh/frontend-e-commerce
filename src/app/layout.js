@@ -1,5 +1,3 @@
-// import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "../../context";
@@ -10,16 +8,12 @@ import "react-toastify/dist/ReactToastify.css";
 import TopHeader from "@/components/shared/TopHeader";
 import Footer from "@/components/shared/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+export const metadata = {
+  title: "ShopMonk",
+  description: "ShopMonk - Get Instant License in a click",
+};
 
-// export const metadata: Metadata = {
-//   title: "E-commerce",
-//   description: "E-commerce - Get Instant License in a click",
-// };
-
-export default function RootLayout({
-  children,
-}) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
@@ -27,7 +21,7 @@ export default function RootLayout({
           <Heading />
           <Container>
             <TopHeader />
-            {children}
+            <div style={{ minHeight: "75vh" }}>{children}</div>
             <Footer />
             <ToastContainer
               position="top-right"

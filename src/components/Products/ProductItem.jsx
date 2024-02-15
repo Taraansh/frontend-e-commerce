@@ -90,8 +90,7 @@ const ProductItem = ({ product, userType }) => {
 
   return (
     <>
-      {/* <Col> */}
-      <Card style={{ width: "16rem"}}>
+      <Card style={{ width: "16rem" }}>
         <Link
           href={`/products/${product?._id}`}
           style={{ textDecoration: "none" }}
@@ -148,74 +147,54 @@ const ProductItem = ({ product, userType }) => {
               <Badge>No Details Yet</Badge>
             )}
             <br />
-            <Rating
+            {/* <Rating
               name="rate1"
               iconsCount={5}
               readonly
               size={18}
               initialValue={product.avgRating || 0}
-            />
-            <br />
+            /> */}
           </Link>
-          {
-            userType === "admin" && (
-              <div className="btnGrpForProduct">
-                <div className="file btn btn-md btn-outline-primary fileInputDiv">
-                  <CloudUpload />
-                  <input
-                    type="file"
-                    name="file"
-                    className="fileInput"
-                    onChange={(e) => {
-                      uploadProductImage(e, product._id);
-                    }}
-                  />
-                </div>
-                <Link
-                  className="btn btn-outline-dark viewProdBtn"
-                  href={{
-                    pathname: `/products/update-product`,
-                    query: { productId: product?._id },
+          {userType === "admin" && (
+            <div className="btnGrpForProduct">
+              <div className="file btn btn-md btn-outline-primary fileInputDiv">
+                <CloudUpload />
+                <input
+                  type="file"
+                  name="file"
+                  className="fileInput"
+                  onChange={(e) => {
+                    uploadProductImage(e, product._id);
                   }}
-                >
-                  <Pen />
-                </Link>
-                <Button
-                  variant="outline-dark"
-                  className="btn btn-outline-dark viewProdBtn"
-                  onClick={() => deleteProduct(product._id)}
-                >
-                  {isLoading && (
-                    <span
-                      className="spinner-border spinner-border-sm mr-2"
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                  )}
-                  <Trash />
-                </Button>
-                {/* <Link
-                  href={`/products/${product?._id}`}
-                  className="btn btn-outline-dark viewProdBtn"
-                >
-                  <Eye />
-                </Link> */}
+                />
               </div>
-            )
-            // : (
-            // <Link
-            //   href={`/products/${product?._id}`}
-            //   className="btn btn-outline-dark viewProdBtn"
-            //   style={{ textDecoration: "none", width: "fit-content" }}
-            // >
-            //   <Eye /> View Details
-            // </Link>
-            // )
-          }
+              <Link
+                className="btn btn-outline-dark viewProdBtn"
+                href={{
+                  pathname: `/products/update-product`,
+                  query: { productId: product?._id },
+                }}
+              >
+                <Pen />
+              </Link>
+              <Button
+                variant="outline-dark"
+                className="btn btn-outline-dark viewProdBtn"
+                onClick={() => deleteProduct(product._id)}
+              >
+                {isLoading && (
+                  <span
+                    className="spinner-border spinner-border-sm mr-2"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                )}
+                <Trash />
+              </Button>
+            </div>
+          )}
         </Card.Body>
       </Card>
-
-      {/* </Col> */}
     </>
   );
 };

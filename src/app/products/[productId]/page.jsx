@@ -102,7 +102,7 @@ const ProductDetails = ({ params }) => {
                 : getFormatedStringFromDays(displaySku?.validity)}
             </Badge>
           </p>
-          <div className="divStar">
+          {/* <div className="divStar">
             <Rating
               name="rate1"
               iconsCount={5}
@@ -112,7 +112,7 @@ const ProductDetails = ({ params }) => {
               style={{ marginBottom: "10px" }}
             />
             ({product?.feedbackDetails?.length || 0} reviews)
-          </div>
+          </div> */}
 
           <ul>
             {product?.highlights &&

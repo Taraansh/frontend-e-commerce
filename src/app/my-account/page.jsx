@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { User } from "../../../services/User.service";
 import AccountDetails from "@/components/MyAccounts/AccountDetails";
 import { useRouter } from "next/navigation";
+import AllOrders from "@/components/MyAccounts/AllOrders";
 
 const MyAccount = () => {
   const {
@@ -26,6 +27,7 @@ const MyAccount = () => {
       dispatch({ type: "LOGOUT", payload: null });
       await User.logoutUser();
       localStorage.removeItem("_e_commerce_user");
+      router.push("/auth");
       toast.success("Logged Out Successfully");
     } catch (error) {
       toast.error(error.message);
@@ -34,7 +36,7 @@ const MyAccount = () => {
 
   return (
     <>
-      <Tab.Container id="left-tabs-example">
+      <Tab.Container id="left-tabs-example" defaultActiveKey="first">
         <Row>
           <Col sm={3}>
             <Nav variant="pills" className="flex-column">
@@ -62,7 +64,7 @@ const MyAccount = () => {
                 <AccountDetails user={user} dispatch={dispatch} />
               </Tab.Pane>
               <Tab.Pane eventKey="second">
-                <h1>All Orders</h1>
+                <AllOrders />
               </Tab.Pane>
             </Tab.Content>
           </Col>
